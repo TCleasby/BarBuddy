@@ -1,0 +1,411 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:theme="@style/Theme.BarBuddy.LightText">
+
+    <TextView
+        android:id="@+id/drink_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:maxLength="400"
+        android:text="null"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <TextView
+        android:id="@+id/drink_instructions"
+        android:layout_width="360dp"
+        android:layout_height="34dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"
+        android:scrollbars="vertical"
+        android:text="null"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/drink_name" />
+
+    <ImageView
+        android:id="@+id/drink_image"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="30dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/drink_instructions" />
+
+    <!--  Drink Ingredients TextViews  -->
+
+    <TextView
+        android:id="@+id/drink_ingredient_1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="30dp"
+        android:maxWidth="100dp"
+        android:text="null"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/drink_instructions" />
+
+    <TextView
+        android:id="@+id/drink_ingredient_2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="10dp"
+        android:maxWidth="100dp"
+        android:text="null"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/drink_measurement_1" />
+
+    <TextView
+        android:id="@+id/drink_ingredient_3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="10dp"
+        android:maxWidth="100dp"
+        android:text="null"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/drink_measurement_2" />
+
+    <TextView
+        android:id="@+id/drink_ingredient_4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:maxWidth="100dp"
+        android:text="null"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/drink_measurement_3" />
+
+    <TextView
+        android:id="@+id/drink_ingredient_5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:maxWidth="100dp"
+        android:text="null"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/drink_measurement_4" />
+
+    <TextView
+        android:id="@+id/drink_ingredient_6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:maxWidth="100dp"
+        android:text="null"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/drink_measurement_5" />
+
+    <TextView
+        android:id="@+id/drink_ingredient_7"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:maxWidth="100dp"
+        android:text="null"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/drink_measurement_6" />
+
+    <TextView
+        android:id="@+id/drink_ingredient_8"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:maxWidth="100dp"
+        android:text="null"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/drink_measurement_7" />
+
+    <TextView
+        android:id="@+id/drink_ingredient_9"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:maxWidth="100dp"
+        android:text="null"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/drink_measurement_8" />
+
+    <TextView
+        android:id="@+id/drink_ingredient_10"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:maxWidth="100dp"
+        android:text="null"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/drink_measurement_9" />
+
+    <TextView
+        android:id="@+id/drink_ingredient_11"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:maxWidth="100dp"
+        android:text="null"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/drink_measurement_10" />
+
+    <TextView
+        android:id="@+id/drink_ingredient_12"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:maxWidth="100dp"
+        android:text="null"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/drink_measurement_11" />
+
+    <TextView
+        android:id="@+id/drink_ingredient_13"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:maxWidth="100dp"
+        android:text="null"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/drink_measurement_12" />
+
+    <TextView
+        android:id="@+id/drink_ingredient_14"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:maxWidth="100dp"
+        android:text="null"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/drink_measurement_13" />
+
+    <TextView
+        android:id="@+id/drink_ingredient_15"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:maxWidth="100dp"
+        android:text="null"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/drink_measurement_14" />
+
+
+    <!--  Drink Measurements TextViews  -->
+
+    <TextView
+        android:id="@+id/drink_measurement_1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="10dp"
+        android:maxWidth="100dp"
+        android:text="null"
+        android:textStyle="italic"
+        app:layout_constraintStart_toStartOf="@+id/drink_ingredient_1"
+        app:layout_constraintTop_toBottomOf="@+id/drink_ingredient_1" />
+
+    <TextView
+        android:id="@+id/drink_measurement_2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="10dp"
+        android:maxWidth="100dp"
+        android:text="null"
+        android:textStyle="italic"
+        app:layout_constraintStart_toStartOf="@+id/drink_ingredient_2"
+        app:layout_constraintTop_toBottomOf="@+id/drink_ingredient_2" />
+
+    <TextView
+        android:id="@+id/drink_measurement_3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="10dp"
+        android:maxWidth="100dp"
+        android:text="null"
+        android:textStyle="italic"
+        app:layout_constraintStart_toStartOf="@+id/drink_ingredient_3"
+        app:layout_constraintTop_toBottomOf="@+id/drink_ingredient_3" />
+
+    <TextView
+        android:id="@+id/drink_measurement_4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="10dp"
+        android:maxWidth="100dp"
+        android:text="null"
+        android:textStyle="italic"
+        app:layout_constraintStart_toStartOf="@+id/drink_ingredient_4"
+        app:layout_constraintTop_toBottomOf="@+id/drink_ingredient_4" />
+
+    <TextView
+        android:id="@+id/drink_measurement_5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="10dp"
+        android:maxWidth="100dp"
+        android:text="null"
+        android:textStyle="italic"
+        app:layout_constraintStart_toStartOf="@+id/drink_ingredient_5"
+        app:layout_constraintTop_toBottomOf="@+id/drink_ingredient_5" />
+
+    <TextView
+        android:id="@+id/drink_measurement_6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="10dp"
+        android:maxWidth="100dp"
+        android:text="null"
+        android:textStyle="italic"
+        app:layout_constraintStart_toStartOf="@+id/drink_ingredient_6"
+        app:layout_constraintTop_toBottomOf="@+id/drink_ingredient_6" />
+
+    <TextView
+        android:id="@+id/drink_measurement_7"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="10dp"
+        android:maxWidth="100dp"
+        android:text="null"
+        android:textStyle="italic"
+        app:layout_constraintStart_toStartOf="@+id/drink_ingredient_7"
+        app:layout_constraintTop_toBottomOf="@+id/drink_ingredient_7" />
+
+    <TextView
+        android:id="@+id/drink_measurement_8"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="10dp"
+        android:maxWidth="100dp"
+        android:text="null"
+        android:textStyle="italic"
+        app:layout_constraintStart_toStartOf="@+id/drink_ingredient_8"
+        app:layout_constraintTop_toBottomOf="@+id/drink_ingredient_8" />
+
+    <TextView
+        android:id="@+id/drink_measurement_9"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="10dp"
+        android:maxWidth="100dp"
+        android:text="null"
+        android:textStyle="italic"
+        app:layout_constraintStart_toStartOf="@+id/drink_ingredient_9"
+        app:layout_constraintTop_toBottomOf="@+id/drink_ingredient_9" />
+
+    <TextView
+        android:id="@+id/drink_measurement_10"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="10dp"
+        android:maxWidth="100dp"
+        android:text="null"
+        android:textStyle="italic"
+        app:layout_constraintStart_toStartOf="@+id/drink_ingredient_10"
+        app:layout_constraintTop_toBottomOf="@+id/drink_ingredient_10" />
+
+    <TextView
+        android:id="@+id/drink_measurement_11"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="10dp"
+        android:maxWidth="100dp"
+        android:text="null"
+        android:textStyle="italic"
+        app:layout_constraintStart_toStartOf="@+id/drink_ingredient_11"
+        app:layout_constraintTop_toBottomOf="@+id/drink_ingredient_11" />
+
+    <TextView
+        android:id="@+id/drink_measurement_12"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="10dp"
+        android:maxWidth="100dp"
+        android:text="null"
+        android:textStyle="italic"
+        app:layout_constraintStart_toStartOf="@+id/drink_ingredient_12"
+        app:layout_constraintTop_toBottomOf="@+id/drink_ingredient_12" />
+
+    <TextView
+        android:id="@+id/drink_measurement_13"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="10dp"
+        android:maxWidth="100dp"
+        android:text="null"
+        android:textStyle="italic"
+        app:layout_constraintStart_toStartOf="@+id/drink_ingredient_13"
+        app:layout_constraintTop_toBottomOf="@+id/drink_ingredient_13" />
+
+    <TextView
+        android:id="@+id/drink_measurement_14"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="10dp"
+        android:maxWidth="100dp"
+        android:text="null"
+        android:textStyle="italic"
+        app:layout_constraintStart_toStartOf="@+id/drink_ingredient_14"
+        app:layout_constraintTop_toBottomOf="@+id/drink_ingredient_14" />
+
+    <TextView
+        android:id="@+id/drink_measurement_15"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="10dp"
+        android:maxWidth="100dp"
+        android:text="null"
+        android:textStyle="italic"
+        app:layout_constraintStart_toStartOf="@+id/drink_ingredient_15"
+        app:layout_constraintTop_toBottomOf="@+id/drink_ingredient_15" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
