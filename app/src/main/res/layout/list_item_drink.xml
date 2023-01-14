@@ -19,19 +19,27 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-
-    <TextView
-        android:id="@+id/drink_instructions"
-        android:layout_width="360dp"
-        android:layout_height="34dp"
+    <ScrollView
+        android:id="@+id/drink_instructions_scrollview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="30dp"
         android:layout_marginEnd="20dp"
-        android:scrollbars="vertical"
-        android:text="null"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/drink_name" />
+        app:layout_constraintTop_toBottomOf="@+id/drink_name">
+
+        <TextView
+            android:id="@+id/drink_instructions"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:maxHeight="69dp"
+            android:scrollbars="vertical"
+            android:text="null" />
+
+    </ScrollView>
+
 
     <ImageView
         android:id="@+id/drink_image"
@@ -40,7 +48,7 @@
         android:layout_marginTop="30dp"
         android:layout_marginEnd="30dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/drink_instructions" />
+        app:layout_constraintTop_toBottomOf="@+id/drink_instructions_scrollview" />
 
     <!--  Drink Ingredients TextViews  -->
 
@@ -54,7 +62,7 @@
         android:text="null"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/drink_instructions" />
+        app:layout_constraintTop_toBottomOf="@+id/drink_instructions_scrollview" />
 
     <TextView
         android:id="@+id/drink_ingredient_2"
@@ -394,6 +402,7 @@
         android:textStyle="italic"
         app:layout_constraintStart_toStartOf="@+id/drink_ingredient_14"
         app:layout_constraintTop_toBottomOf="@+id/drink_ingredient_14" />
+
 
     <TextView
         android:id="@+id/drink_measurement_15"

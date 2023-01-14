@@ -1,13 +1,15 @@
 package com.example.barbuddy
 
 import android.os.Bundle
+import android.text.method.ScrollingMovementMethod
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
-import android.view.View.OnTouchListener
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
+import android.widget.ScrollView
 import android.widget.TextView
 import androidx.core.view.ViewCompat.setNestedScrollingEnabled
 import androidx.fragment.app.Fragment
@@ -73,6 +75,7 @@ class RandomFragment : Fragment() {
         // Drink Misc. Views
         var drinkNameTextView: TextView = itemView.findViewById(R.id.drink_name)
         var drinkInstructionsTextView: TextView = itemView.findViewById(R.id.drink_instructions)
+        var drinkInstructionsScrollView: ScrollView =  itemView.findViewById(R.id.drink_instructions_scrollview)
         var drinkImageImageView: ImageView = itemView.findViewById(R.id.drink_image)
 
         // Drink Ingredients TextViews
@@ -124,8 +127,25 @@ class RandomFragment : Fragment() {
 
             // Drink Misc.
             drinkNameTextView.text = this.drink.name.toString()
-            //drinkInstructionsTextView.text = this.drink.instructions.toString()
-            checkDataIsNull("", drinkInstructionsTextView)
+            drinkInstructionsTextView.text = this.drink.instructions.toString()
+
+            drinkInstructionsTextView.movementMethod = ScrollingMovementMethod()
+
+//            drinkRecyclerView.setOnTouchListener(object : View.OnTouchListener {
+//                override fun onTouch(v: View?, event: MotionEvent?): Boolean {
+//                    drinkInstructionsScrollView.parent.requestDisallowInterceptTouchEvent(false);
+//                    return false;
+//                }
+//            })
+
+            drinkInstructionsTextView.setOnTouchListener(object : View.OnTouchListener {
+                override fun onTouch(v: View?, event: MotionEvent?): Boolean {
+                    v?.parent?.requestDisallowInterceptTouchEvent(true);
+                    return false;
+                }
+            })
+
+                //checkDataIsNull("", drinkInstructionsTextView)
 
             getImageFromURL(drink.thumbnail.toString(),drinkImageImageView)
 
