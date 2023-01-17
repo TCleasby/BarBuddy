@@ -1,23 +1,26 @@
 package com.example.barbuddy
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.text.method.ScrollingMovementMethod
 import android.util.Log
 import android.view.LayoutInflater
-import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.ImageButton
 import android.widget.ImageView
-import android.widget.ScrollView
 import android.widget.TextView
 import androidx.core.view.ViewCompat.setNestedScrollingEnabled
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
+import java.io.File
+import java.io.FileOutputStream
 
 
 class RandomFragment : Fragment() {
@@ -54,12 +57,11 @@ class RandomFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         drinkViewModel.drinkItemLiveData.observe(
-            viewLifecycleOwner,
-            Observer { drinks ->
-                drinkRecyclerView.adapter = DrinkAdapter(drinks)
-                Log.d("Observer", "Received Results")
-            }
-        )
+            viewLifecycleOwner
+        ) { drinks ->
+            drinkRecyclerView.adapter = DrinkAdapter(drinks)
+            Log.d("Observer", "Received Results")
+        }
 
         // Button Functionality
         rndDrinkButton = view.findViewById(R.id.rndDrinkBtn)
@@ -75,8 +77,9 @@ class RandomFragment : Fragment() {
         // Drink Misc. Views
         var drinkNameTextView: TextView = itemView.findViewById(R.id.drink_name)
         var drinkInstructionsTextView: TextView = itemView.findViewById(R.id.drink_instructions)
-        var drinkInstructionsScrollView: ScrollView =  itemView.findViewById(R.id.drink_instructions_scrollview)
         var drinkImageImageView: ImageView = itemView.findViewById(R.id.drink_image)
+        var favoriteDrinkButtonOff: ImageButton =  itemView.findViewById(R.id.favorite_drink_button_off)
+        var favoriteDrinkButtonOn: ImageButton = itemView.findViewById(R.id.favorite_drink_button_on)
 
         // Drink Ingredients TextViews
         var drinkIngredient1TextView: TextView = itemView.findViewById(R.id.drink_ingredient_1)
@@ -114,6 +117,7 @@ class RandomFragment : Fragment() {
 
 
 
+        @SuppressLint("ClickableViewAccessibility")
         fun bind(drink: DrinkItem){
             this.drink = drink
 
@@ -131,21 +135,32 @@ class RandomFragment : Fragment() {
 
             drinkInstructionsTextView.movementMethod = ScrollingMovementMethod()
 
-//            drinkRecyclerView.setOnTouchListener(object : View.OnTouchListener {
-//                override fun onTouch(v: View?, event: MotionEvent?): Boolean {
-//                    drinkInstructionsScrollView.parent.requestDisallowInterceptTouchEvent(false);
-//                    return false;
-//                }
-//            })
 
-            drinkInstructionsTextView.setOnTouchListener(object : View.OnTouchListener {
-                override fun onTouch(v: View?, event: MotionEvent?): Boolean {
-                    v?.parent?.requestDisallowInterceptTouchEvent(true);
-                    return false;
-                }
-            })
+            // Favorite Drink Button Functionality ////////////////////
 
-                //checkDataIsNull("", drinkInstructionsTextView)
+
+            //Drink favorited
+            favoriteDrinkButtonOff.setOnClickListener{
+                favoriteDrinkButtonOn.visibility = View.VISIBLE
+                favoriteDrinkButtonOff.visibility = View.GONE
+                val drinkObjectAsByteArray = Json.encodeToString(drink).toByteArray()
+                val drinkObjectNameAsByteArray = Json.encodeToString(drink.name).toByteArray()
+                writeToFile("favoriteDrinks.txt", drinkObjectAsByteArray)
+                writeToFile("favoriteDrinksNames.txt", drinkObjectNameAsByteArray)
+            }
+
+            //Drink unfavorited
+            favoriteDrinkButtonOn.setOnClickListener{
+                favoriteDrinkButtonOff.visibility = View.VISIBLE
+                favoriteDrinkButtonOn.visibility = View.GONE
+            }
+
+            drinkInstructionsTextView.setOnTouchListener { v, _ ->
+                v?.parent?.requestDisallowInterceptTouchEvent(true)
+                false
+            }
+
+            checkDataIsNull("", drinkInstructionsTextView)
 
             getImageFromURL(drink.thumbnail.toString(),drinkImageImageView)
 
@@ -229,12 +244,29 @@ class RandomFragment : Fragment() {
         var adapter: DrinkAdapter? = DrinkAdapter(emptyList())
         drinkRecyclerView.adapter = adapter
         drinkViewModel.drinkItemLiveData.observe(
-            viewLifecycleOwner,
-            Observer { drinks ->
-                drinkRecyclerView.adapter = DrinkAdapter(drinks)
-                Log.d("Observer", "Received Results")
-            }
-        )
+            viewLifecycleOwner
+        ) { drinks ->
+            drinkRecyclerView.adapter = DrinkAdapter(drinks)
+            Log.d("Observer", "Received Results")
+        }
+    }
+
+    private fun writeToFile(fileName: String, byteArray: ByteArray){
+
+        val lineSeparator: String = System.getProperty("line.separator") as String
+
+        // File
+        val path = context!!.filesDir
+        val directory = File(path, "LET")
+        directory.mkdirs()
+        val file = File(directory, fileName)
+
+        FileOutputStream(file, true).use {
+            it.write(byteArray)
+            it.write(lineSeparator.toByteArray())
+        }
+
+        Log.i("Item Favorited:", "Item saved to $file")
     }
 }
 

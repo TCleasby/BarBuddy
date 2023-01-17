@@ -1,13 +1,10 @@
 package com.example.barbuddy
 
-import android.app.Notification.Action
-import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
 import android.view.View
-import android.view.WindowManager
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
@@ -64,7 +61,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         }
 
         drawerLayout.closeDrawer(GravityCompat.START)
-        return true;
+        return true
     }
 
     override fun onBackPressed() {

@@ -1,7 +1,9 @@
 package com.example.barbuddy
 
 import com.google.gson.annotations.SerializedName
+import kotlinx.serialization.Serializable
 
+@Serializable
 class DrinkItem {
     @SerializedName("strAlcoholic")
     val alcoholic: String? = null

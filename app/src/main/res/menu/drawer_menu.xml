@@ -4,9 +4,15 @@
     tools:showIn="navigation_view">
     <group android:checkableBehavior="single">
         <item
+            android:id="@+id/nav_favorited"
+            android:icon="@drawable/ic_star"
+            android:title="@string/favorited_drinks"
+            android:iconTint="@color/white"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark"/>
+        <item
             android:id="@+id/nav_random"
             android:icon="@drawable/ic_random"
-            android:title="Random"
+            android:title="@string/random_drink"
             android:iconTint="@color/white"
             android:theme="@style/ThemeOverlay.AppCompat.Dark"/>
     </group>

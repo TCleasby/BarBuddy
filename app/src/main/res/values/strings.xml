@@ -4,4 +4,9 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="random_drink">Random Drink</string>
+    <string name="Null_Text">Null</string>
+    <string name="empty_star">Empty Star</string>
+    <string name="full_star">Full Star</string>
+    <string name="drink_image">Drink Image</string>
+    <string name="favorited_drinks">Favorited Drinks</string>
 </resources>
