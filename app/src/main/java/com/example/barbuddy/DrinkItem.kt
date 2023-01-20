@@ -5,6 +5,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 class DrinkItem {
+    
     @SerializedName("strAlcoholic")
     val alcoholic: String? = null
 

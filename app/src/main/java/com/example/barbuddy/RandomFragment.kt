@@ -19,8 +19,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
-import java.io.File
-import java.io.FileOutputStream
+import java.io.*
 
 
 class RandomFragment : Fragment() {
@@ -153,6 +152,10 @@ class RandomFragment : Fragment() {
             favoriteDrinkButtonOn.setOnClickListener{
                 favoriteDrinkButtonOff.visibility = View.VISIBLE
                 favoriteDrinkButtonOn.visibility = View.GONE
+                val drinkObjectAsJson = Json.encodeToString(drink)
+                Log.i("drinkObjectAsJson:", drinkObjectAsJson)
+                deleteFromFile("favoriteDrinksNames.txt", "\"" + drink.name.toString() + "\"")
+                deleteFromFile("favoriteDrinks.txt", drinkObjectAsJson)
             }
 
             drinkInstructionsTextView.setOnTouchListener { v, _ ->
@@ -261,12 +264,43 @@ class RandomFragment : Fragment() {
         directory.mkdirs()
         val file = File(directory, fileName)
 
+        //append drink to file
         FileOutputStream(file, true).use {
             it.write(byteArray)
             it.write(lineSeparator.toByteArray())
         }
 
         Log.i("Item Favorited:", "Item saved to $file")
+    }
+
+    private fun deleteFromFile(fileName: String, stringToDelete: String){
+
+        //File Setup
+        val path = context!!.filesDir
+        val directory = File(path, "LET")
+        directory.mkdirs()
+        val inputFile = File(directory, fileName)
+        val tempFile = File(directory,"myTempFile.txt")
+
+        //Reader and Writer
+        val reader = BufferedReader(FileReader(inputFile))
+        val writer = BufferedWriter(FileWriter(tempFile))
+
+        //Loop through file and delete current drink
+        reader.forEachLine {
+            // trim newline when comparing with lineToRemove
+            val trimmedLine = it
+            if (trimmedLine == stringToDelete){
+                Log.i("Line Deleted:", trimmedLine)
+                Log.i("Line Deleted:", "^^^DELETED^^^")
+            } else {
+                Log.i("Line Saved:", trimmedLine)
+                writer.write(it + System.getProperty("line.separator"))
+            }
+        }
+        tempFile.renameTo(inputFile)
+        writer.close()
+        reader.close()
     }
 }
 

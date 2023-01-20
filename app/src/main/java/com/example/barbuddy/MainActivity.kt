@@ -58,6 +58,11 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 toolbar.title = "Random Drink"
                 supportFragmentManager.beginTransaction().replace(R.id.fragment_container, RandomFragment()).commit()
             }
+            R.id.nav_favorited -> {
+                Log.i("nav_favorited", "Clicked")
+                toolbar.title = "Favorited Drinks"
+                supportFragmentManager.beginTransaction().replace(R.id.fragment_container, FavoritedDrinksFragment()).commit()
+            }
         }
 
         drawerLayout.closeDrawer(GravityCompat.START)
