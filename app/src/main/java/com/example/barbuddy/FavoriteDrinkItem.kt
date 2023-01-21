@@ -1,5 +1,6 @@
 package com.example.barbuddy
 
+@kotlinx.serialization.Serializable
 class FavoriteDrinkItem {
     val alcoholic: String? = null
 

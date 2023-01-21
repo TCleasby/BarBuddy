@@ -1,6 +1,7 @@
 package com.example.barbuddy
 
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -10,7 +11,6 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.view.ViewCompat.setNestedScrollingEnabled
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.gson.Gson
@@ -22,6 +22,12 @@ class FavoritedDrinksFragment : Fragment() {
 
     private lateinit var favoritedDrinkRecyclerView: RecyclerView
     private var adapter: DrinkAdapter? = DrinkAdapter(emptyList())
+    private var callbacks: NavCallbacks? =null
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        callbacks = context as NavCallbacks?
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -33,10 +39,6 @@ class FavoritedDrinksFragment : Fragment() {
         favoritedDrinkRecyclerView.layoutManager = LinearLayoutManager(context)
         favoritedDrinkRecyclerView.adapter = adapter
         setNestedScrollingEnabled(favoritedDrinkRecyclerView, false)
-//        favoritedDrinkRecyclerView.addItemDecoration(
-//            RecyclerViewItemDecoration(requireContext(),
-//            R.drawable.divider
-//        ))
         return view
     }
 
@@ -78,11 +80,15 @@ class FavoritedDrinksFragment : Fragment() {
         return drinkList
     }
 
-    private inner class DrinkHolder(view: View) : RecyclerView.ViewHolder(view) {
+    inner class DrinkHolder(view: View) : RecyclerView.ViewHolder(view), View.OnClickListener {
         private lateinit var drink: FavoriteDrinkItem
 
         var drinkNameTextView: TextView = itemView.findViewById(R.id.drink_name)
         var drinkImageImageView: ImageView = itemView.findViewById(R.id.drink_image)
+
+        init {
+            itemView.setOnClickListener(this)
+        }
 
         fun bind(drink: FavoriteDrinkItem){
             this.drink = drink
@@ -91,9 +97,16 @@ class FavoritedDrinksFragment : Fragment() {
 
             getImageFromURL(drink.thumbnail.toString(),drinkImageImageView)
         }
+
+        override fun onClick(v: View?) {
+            Log.i("Item Clicked:", this.drink.name.toString())
+            callbacks?.onDrinkSelected(this.drink)
+        }
     }
 
     private inner class DrinkAdapter(var drinks: List<FavoriteDrinkItem>) : RecyclerView.Adapter<DrinkHolder>() {
+
+
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DrinkHolder {
             val view = layoutInflater.inflate(R.layout.list_item_favorited_drink, parent, false)
             return DrinkHolder(view)

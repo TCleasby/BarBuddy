@@ -1,19 +1,18 @@
 package com.example.barbuddy
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.os.Bundle
 import android.text.method.ScrollingMovementMethod
 import android.util.Log
+import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.core.view.ViewCompat.setNestedScrollingEnabled
-import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import androidx.core.view.ViewCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
@@ -21,21 +20,15 @@ import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import java.io.*
 
+class SingleFavoritedDrinkFragment(drink: FavoriteDrinkItem) : Fragment() {
 
-class RandomFragment : Fragment() {
+    private lateinit var singleFavoritedDrinkRecyclerView: RecyclerView
+    private var adapter: DrinkAdapter? = DrinkAdapter(drink)
+    private var callbacks: NavCallbacks? = null
 
-    private lateinit var drinkRecyclerView: RecyclerView
-    private lateinit var drinkViewModel: DrinkViewModel
-    private lateinit var drinkViewModelFactory: DrinkViewModelFactory
-    private var adapter: DrinkAdapter? = DrinkAdapter(emptyList())
-    private lateinit var rndDrinkButton: Button
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        drinkViewModelFactory = DrinkViewModelFactory()
-        drinkViewModel = ViewModelProvider(this, drinkViewModelFactory).get(DrinkViewModel::class.java)
-
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        callbacks = context as NavCallbacks?
     }
 
     override fun onCreateView(
@@ -43,35 +36,16 @@ class RandomFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_random, container, false)
-        drinkRecyclerView = view.findViewById(R.id.drink_recycler_view)
-        drinkRecyclerView.layoutManager = LinearLayoutManager(context)
-        drinkRecyclerView.adapter = adapter
-        setNestedScrollingEnabled(drinkRecyclerView, false)
-
+        val view = inflater.inflate(R.layout.fragment_single_favorited_drink, container, false)
+        singleFavoritedDrinkRecyclerView = view.findViewById(R.id.single_favorited_drink_recycler_view)
+        singleFavoritedDrinkRecyclerView.layoutManager = LinearLayoutManager(context)
+        singleFavoritedDrinkRecyclerView.adapter = adapter
+        ViewCompat.setNestedScrollingEnabled(singleFavoritedDrinkRecyclerView, false)
         return view
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        drinkViewModel.drinkItemLiveData.observe(
-            viewLifecycleOwner
-        ) { drinks ->
-            drinkRecyclerView.adapter = DrinkAdapter(drinks)
-            Log.d("Observer", "Received Results")
-        }
-
-        // Button Functionality
-        rndDrinkButton = view.findViewById(R.id.rndDrinkBtn)
-        rndDrinkButton.setOnClickListener{
-            resetAdapterState()
-        }
-    }
-
-
     private inner class DrinkHolder(view: View) : RecyclerView.ViewHolder(view) {
-        private lateinit var drink: DrinkItem
+        private lateinit var drink: FavoriteDrinkItem
 
         // Drink Misc. Views
         var drinkNameTextView: TextView = itemView.findViewById(R.id.drink_name)
@@ -117,12 +91,8 @@ class RandomFragment : Fragment() {
 
 
         @SuppressLint("ClickableViewAccessibility")
-        fun bind(drink: DrinkItem){
+        fun bind(drink: FavoriteDrinkItem){
             this.drink = drink
-
-            if (checkForAlcohol(this.drink)){
-                resetAdapterState()
-            }
 
             Log.d("Drink", this.drink.name.toString())
 
@@ -131,19 +101,18 @@ class RandomFragment : Fragment() {
             // Drink Misc.
             drinkNameTextView.text = this.drink.name.toString()
             drinkInstructionsTextView.text = this.drink.instructions.toString()
-
             drinkInstructionsTextView.movementMethod = ScrollingMovementMethod()
-
 
             // Favorite Drink Button Functionality ////////////////////
             if(checkIfFavortied("favoriteDrinksNames.txt", this.drink.name.toString())){
+                Log.i("Drink:", "Favorited")
                 favoriteDrinkButtonOn.visibility = View.VISIBLE
                 favoriteDrinkButtonOff.visibility = View.GONE
             } else {
+                Log.i("Drink:", "Not Favorited")
                 favoriteDrinkButtonOff.visibility = View.VISIBLE
                 favoriteDrinkButtonOn.visibility = View.GONE
             }
-
 
             //Drink favorited
             favoriteDrinkButtonOff.setOnClickListener{
@@ -212,20 +181,27 @@ class RandomFragment : Fragment() {
 
     }
 
-    private inner class DrinkAdapter(var drinks: List<DrinkItem>) : RecyclerView.Adapter<DrinkHolder>() {
+    private inner class DrinkAdapter(var drinks: FavoriteDrinkItem) : RecyclerView.Adapter<DrinkHolder>() {
+
+
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DrinkHolder {
             val view = layoutInflater.inflate(R.layout.list_item_drink, parent, false)
             return DrinkHolder(view)
         }
 
-        override fun getItemCount(): Int {
-            return drinks.size
-        }
-
         override fun onBindViewHolder(holder: DrinkHolder, position: Int) {
-            val drink = drinks[position]
+            val drink = drinks
             holder.bind(drink)
         }
+
+        override fun getItemCount(): Int {
+            return 1
+        }
+
+    }
+
+    private fun getImageFromURL(url: String, imageView: ImageView) {
+        Picasso.get().load(url).into(imageView)
     }
 
     private fun checkDataIsNull(string: String, textView: TextView) {
@@ -235,49 +211,6 @@ class RandomFragment : Fragment() {
             textView.text = string
         }
 
-    }
-
-    private fun getImageFromURL(url: String, imageView: ImageView) {
-        Picasso.get().load(url).into(imageView)
-    }
-
-    private fun  checkForAlcohol(drink: DrinkItem): Boolean {
-        Log.d(drink.alcoholic.toString(), "Alcohol")
-        if (drink.alcoholic == "Alcoholic") {
-            return false
-        }
-        return true
-    }
-
-    private fun resetAdapterState() {
-        drinkViewModel.getNewDrink()
-        var adapter: DrinkAdapter? = DrinkAdapter(emptyList())
-        drinkRecyclerView.adapter = adapter
-        drinkViewModel.drinkItemLiveData.observe(
-            viewLifecycleOwner
-        ) { drinks ->
-            drinkRecyclerView.adapter = DrinkAdapter(drinks)
-            Log.d("Observer", "Received Results")
-        }
-    }
-
-    private fun writeToFile(fileName: String, byteArray: ByteArray){
-
-        val lineSeparator: String = System.getProperty("line.separator") as String
-
-        // File
-        val path = context!!.filesDir
-        val directory = File(path, "LET")
-        directory.mkdirs()
-        val file = File(directory, fileName)
-
-        //append drink to file
-        FileOutputStream(file, true).use {
-            it.write(byteArray)
-            it.write(lineSeparator.toByteArray())
-        }
-
-        Log.i("Item Favorited:", "Item saved to $file")
     }
 
     private fun deleteFromFile(fileName: String, stringToDelete: String){
@@ -310,8 +243,28 @@ class RandomFragment : Fragment() {
         reader.close()
     }
 
+    private fun writeToFile(fileName: String, byteArray: ByteArray){
+
+        val lineSeparator: String = System.getProperty("line.separator") as String
+
+        // File
+        val path = context!!.filesDir
+        val directory = File(path, "LET")
+        directory.mkdirs()
+        val file = File(directory, fileName)
+
+        //append drink to file
+        FileOutputStream(file, true).use {
+            it.write(byteArray)
+            it.write(lineSeparator.toByteArray())
+        }
+
+        Log.i("Item Favorited:", "Item saved to $file")
+    }
+
     private fun checkIfFavortied(fileName: String, drinkName: String): Boolean {
 
+        Log.d("CheckIfFavorited:", "Inside")
         var sameDrink: Boolean = false
 
         //File Setup
@@ -325,11 +278,12 @@ class RandomFragment : Fragment() {
 
         //Loop through file and compare names
         reader.forEachLine {
-            if (it == drinkName) {
+            Log.i(it.toString(), drinkName)
+            if (it == "\"$drinkName\"") {
                 sameDrink = true
             }
         }
         return sameDrink
     }
-}
 
+}
